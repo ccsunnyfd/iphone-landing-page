@@ -8,6 +8,11 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        flowout: {
+          '100%': { transform: 'translateY(0)' },
+        }
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

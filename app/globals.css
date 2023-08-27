@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animation-delay-0 {
+    animation-delay: 0ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-800 {
+    animation-delay: 800ms;
+  }
+  .animation-delay-1200 {
+    animation-delay: 1200ms;
+  }
+  .animation-delay-1600 {
+    animation-delay: 1600ms;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -24,4 +42,26 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.colorgradient {
+  background-image: linear-gradient(
+    to top left,
+    #35c3f3 0%,
+    #8b9fe8 20%,
+    #e681d8 39%,
+    #ffa9a4 76%,
+    #fed2ce 100%
+  );
+}
+
+.authorcolorgradient {
+  background-image: linear-gradient(
+    to top,
+    #35c3f3 0%,
+    #8b9fe8 20%,
+    #e681d8 39%,
+    #ffa9a4 76%,
+    #fed2ce 100%
+  );
 }
