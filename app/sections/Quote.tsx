@@ -1,6 +1,6 @@
 const Quote = () => {
   return (
-    <div className="absolute flex h-screen w-screen translate-y-12 flex-col items-center justify-center bg-black text-white ">
+    <div className="relative flex h-screen w-screen flex-col items-center justify-center bg-black text-white ">
       <p className="relative h-10 w-1/2 overflow-hidden text-3xl">
         <span className=" colorgradient animation-delay-0 absolute translate-y-12 animate-[flowout_2s_ease-in-out_forwards] bg-clip-text font-sans text-transparent transition ">
           &#8220; You can&#39;t connect the dots looking forward;
