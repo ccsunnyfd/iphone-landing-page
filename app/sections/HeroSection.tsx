@@ -1,5 +1,3 @@
-import backgroundVideo from "../../public/video/Ink - 21536.mp4";
-
 const HeroSection = () => {
   return (
     <div className="relative flex h-screen w-screen items-center justify-end overflow-hidden bg-black ">
