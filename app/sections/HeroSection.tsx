@@ -14,7 +14,7 @@ const HeroSection = () => {
       <h1 className="absolute left-0.5 top-0.5 font-sans text-3xl text-gray-600">
         iPhone 14 Pro Max
       </h1>
-      <div className="z-1 colorgradient-45 absolute flex h-full w-full items-center justify-between bg-clip-text text-transparent">
+      <div className="colorgradient-45 absolute z-10 flex h-full w-full items-center justify-between bg-clip-text text-transparent">
         <span className="p-8 text-8xl font-semibold uppercase">So.Cold.</span>
         <span className="p-8 text-8xl font-semibold uppercase">So.Bold.</span>
       </div>

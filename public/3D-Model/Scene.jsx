@@ -23,12 +23,15 @@ export function Model(props) {
         trigger: "#phone-model",
         start: "top top",
         end: "bottom+=500 bottom",
-        markers: true,
       },
     });
 
     t1.fromTo(camera.position, { y: 2 }, { y: 0 });
-  }, []);
+
+    return () => {
+      if (t1) t1.kill();
+    };
+  }, [camera.position]);
 
   return (
     <group {...props} dispose={null}>
