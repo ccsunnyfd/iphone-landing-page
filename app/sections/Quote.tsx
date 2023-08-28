@@ -1,6 +1,32 @@
+"use client";
+
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+import { useLayoutEffect, useRef } from "react";
+
 const Quote = () => {
+  const sectionRef = useRef(null);
+
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const trigger = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top top",
+      pin: true,
+      pinSpacing: false,
+    });
+
+    return () => {
+      if (trigger) trigger.kill();
+    };
+  }, []);
+
   return (
-    <div className="relative flex h-screen w-screen flex-col items-center justify-center bg-black text-white ">
+    <div
+      ref={sectionRef}
+      className="fixed top-0 flex h-screen w-screen flex-col items-center justify-center bg-black text-white "
+    >
       <p className="relative h-10 w-1/2 overflow-hidden text-3xl">
         <span className=" colorgradient animation-delay-0 absolute translate-y-12 animate-[flowout_2s_ease-in-out_forwards] bg-clip-text font-sans text-transparent transition ">
           &#8220; You can&#39;t connect the dots looking forward;
