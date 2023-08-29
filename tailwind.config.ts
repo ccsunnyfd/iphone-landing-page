@@ -11,6 +11,10 @@ const config: Config = {
       keyframes: {
         flowout: {
           '100%': { transform: 'translateY(0)' },
+        },
+        glow: {
+          '0%, 100%': { boxShadow: '1px 1px 10px #ffffff' },
+          '50%': { boxShadow: '2px 2px 25px #ffffff' },
         }
       },
       backgroundImage: {
