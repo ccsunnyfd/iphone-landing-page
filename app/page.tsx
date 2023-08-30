@@ -1,3 +1,4 @@
+import BatterySection from "./sections/BatterySection";
 import DesignSection from "./sections/DesignSection";
 import DisplaySection from "./sections/DisplaySection";
 import HeroSection from "./sections/HeroSection";
@@ -14,6 +15,7 @@ export default function Home() {
       <DesignSection />
       <DisplaySection />
       <ProcessorSection />
+      <BatterySection />
     </div>
   );
 }

@@ -55,6 +55,17 @@ body {
   );
 }
 
+.-colorgradient-90 {
+  background-image: linear-gradient(
+    to left,
+    #35c3f3 0%,
+    #8b9fe8 20%,
+    #e681d8 39%,
+    #ffa9a4 76%,
+    #fed2ce 100%
+  );
+}
+
 .colorgradient-45 {
   background-image: linear-gradient(
     to bottom right,
