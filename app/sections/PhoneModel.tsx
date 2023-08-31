@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
-import { Model } from "@/public/3D-Model/Scene";
+import { Model } from "@/app/components/Scene";
 import { Suspense } from "react";
 
 const PhoneModel = () => {

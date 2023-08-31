@@ -1,13 +1,19 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { Suspense, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { Environment, useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Model2 } from "@/app/components/Scene2";
 
 const ColorSection = () => {
   const sectionRef = useRef(null);
   const leftRef = useRef(null);
   const rightRef = useRef(null);
   const textRef = useRef(null);
+
+  // @ts-ignore
+  const { materials } = useGLTF("/3D-Model/scene.gltf");
 
   useLayoutEffect(() => {
     const Elem = sectionRef.current as HTMLDivElement | null;
@@ -16,6 +22,7 @@ const ColorSection = () => {
     const textElem = textRef.current as HTMLDivElement | null;
 
     const updateColor = (color: string, text: string, rgbColor: string) => {
+      materials.Body.color.set(color);
       textElem!.innerText = text;
       textElem!.style.color = color;
       leftElem!.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
@@ -80,7 +87,7 @@ const ColorSection = () => {
       });
 
     return () => {};
-  }, []);
+  }, [materials.Body.color]);
 
   return (
     <div
@@ -94,13 +101,21 @@ const ColorSection = () => {
       <div
         ref={textRef}
         className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 -rotate-90 text-center text-[55px] uppercase brightness-[0.85]"
-      >
-        Sierra Blue
-      </div>
+      />
       <div
         ref={rightRef}
         className="relative flex h-full w-1/2 bg-[rgba(155,181,206,0.4)]"
-      />
+      >
+        <Canvas camera={{ fov: 6.5 }}>
+          <ambientLight intensity={1.25} />
+          <directionalLight intensity={0.4} />
+          <Suspense fallback={null}>
+            <Model2 />
+          </Suspense>
+          <Environment preset="night" />
+          {/* <OrbitControls /> */}
+        </Canvas>
+      </div>
     </div>
   );
 };

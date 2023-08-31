@@ -16,22 +16,81 @@ export function Model(props) {
   const { nodes, materials } = useGLTF("/3D-Model/scene.gltf");
 
   const camera = useThree((state) => state.camera);
+  const scene = useThree((state) => state.scene);
 
   useLayoutEffect(() => {
+    camera.position.set(0, 2, 6);
+    materials.Body.color.set("#9BB5CE");
+
     const t1 = gsap.timeline({
       scrollTrigger: {
         trigger: "#phone-model",
-        start: "top top",
-        end: "bottom+=500 bottom",
+        start: "top+=200 top",
+        endTrigger: "#battery",
+        end: "top top",
+        scrub: true,
+        // markers: true,
       },
     });
 
-    t1.fromTo(camera.position, { y: 2 }, { y: 0 });
+    t1.fromTo(camera.position, { y: 2 }, { y: 0 })
+      .to(scene.rotation, {
+        y: 0.8,
+      })
+      .to(scene.rotation, {
+        y: 3,
+      })
+      .to(
+        scene.rotation,
+        {
+          z: 1.58,
+        },
+        "key1",
+      )
+      .to(
+        camera.position,
+        {
+          z: 4,
+        },
+        "key1",
+      )
+      .to(
+        scene.rotation,
+        {
+          y: 0,
+          z: 0,
+        },
+        "key2",
+      )
+      .to(
+        camera.position,
+        {
+          z: 6,
+          x: -1,
+        },
+        "key2",
+      )
+      .to(
+        scene.rotation,
+        {
+          z: 0,
+          y: 6.3,
+        },
+        "key3",
+      )
+      .to(
+        camera.position,
+        {
+          x: 0.8,
+          y: 0,
+        },
+        "key3",
+      );
 
     return () => {
       if (t1) t1.kill();
     };
-  }, [camera.position]);
+  }, [camera.position, materials.Body.color, scene.rotation]);
 
   return (
     <group {...props} dispose={null}>
