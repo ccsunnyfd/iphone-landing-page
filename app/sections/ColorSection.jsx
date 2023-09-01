@@ -2,9 +2,11 @@
 
 import { Suspense, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { Environment, useGLTF } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Model2 } from "@/app/components/Scene2";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useLoader } from "@react-three/fiber";
 
 const ColorSection = () => {
   const sectionRef = useRef(null);
@@ -12,28 +14,27 @@ const ColorSection = () => {
   const rightRef = useRef(null);
   const textRef = useRef(null);
 
-  // @ts-ignore
-  const { materials } = useGLTF("/3D-Model/scene.gltf");
+  const { materials } = useLoader(GLTFLoader, "/3D-Model/scene.gltf");
 
   useLayoutEffect(() => {
-    const Elem = sectionRef.current as HTMLDivElement | null;
-    const leftElem = leftRef.current as HTMLDivElement | null;
-    const rightElem = rightRef.current as HTMLDivElement | null;
-    const textElem = textRef.current as HTMLDivElement | null;
+    const Elem = sectionRef.current;
+    const leftElem = leftRef.current;
+    const rightElem = rightRef.current;
+    const textElem = textRef.current;
 
-    const updateColor = (color: string, text: string, rgbColor: string) => {
+    const updateColor = (color, text, rgbColor) => {
       materials.Body.color.set(color);
-      textElem!.innerText = text;
-      textElem!.style.color = color;
-      leftElem!.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
-      rightElem!.style.backgroundColor = `rgba(${rgbColor}, 0.4)`;
+      textElem.innerText = text;
+      textElem.style.color = color;
+      leftElem.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
+      rightElem.style.backgroundColor = `rgba(${rgbColor}, 0.4)`;
     };
 
     gsap.to(Elem, {
       scrollTrigger: {
         trigger: Elem,
         start: "top top",
-        end: `+=${Elem?.offsetWidth! + 1000}`,
+        end: `+=${Elem.offsetWidth + 1000}`,
         scrub: true,
         pin: true,
         pinSpacing: true,
@@ -45,7 +46,7 @@ const ColorSection = () => {
         scrollTrigger: {
           trigger: Elem,
           start: "top top",
-          end: `+=${Elem?.offsetWidth! + 1000}`,
+          end: `+=${Elem.offsetWidth + 1000}`,
           scrub: true,
         },
       })
@@ -86,8 +87,10 @@ const ColorSection = () => {
         onReverseCompleteParams: ["#215E7C", "Blue", "33, 94, 124"],
       });
 
-    return () => {};
-  }, [materials.Body.color]);
+    return () => {
+      if (t2) t2.kill();
+    };
+  }, []);
 
   return (
     <div

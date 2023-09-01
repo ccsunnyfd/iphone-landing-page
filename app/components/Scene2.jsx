@@ -8,11 +8,12 @@ Title: Apple iPhone 13 Pro Max
 */
 
 import { useLayoutEffect } from "react";
-import { useGLTF } from "@react-three/drei";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useLoader } from "@react-three/fiber";
 import { useThree } from "@react-three/fiber";
 
 export function Model2(props) {
-  const { nodes, materials } = useGLTF("/3D-Model/scene.gltf");
+  const { nodes, materials } = useLoader(GLTFLoader, "/3D-Model/scene.gltf");
 
   const camera = useThree((state) => state.camera);
 
@@ -146,5 +147,3 @@ export function Model2(props) {
     </group>
   );
 }
-
-useGLTF.preload("/3D-Model/scene.gltf");

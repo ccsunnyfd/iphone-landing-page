@@ -1,5 +1,6 @@
 import BatterySection from "./sections/BatterySection";
-import ColorSection from "./sections/ColorSection";
+import CameraSection from "./sections/CameraSection";
+import ColorSection from "./sections/ColorSection.jsx";
 import DesignSection from "./sections/DesignSection";
 import DisplaySection from "./sections/DisplaySection";
 import HeroSection from "./sections/HeroSection";
@@ -18,6 +19,7 @@ export default function Home() {
       <ProcessorSection />
       <BatterySection />
       <ColorSection />
+      <CameraSection />
     </div>
   );
 }
