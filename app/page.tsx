@@ -1,10 +1,11 @@
 import BatterySection from "./sections/BatterySection";
 import CameraSection from "./sections/CameraSection";
-import ColorSection from "./sections/ColorSection.jsx";
+import ColorSection from "./sections/ColorSection";
 import DesignSection from "./sections/DesignSection";
 import DisplaySection from "./sections/DisplaySection";
 import HeroSection from "./sections/HeroSection";
 import PhoneModel from "./sections/PhoneModel";
+import PricingSection from "./sections/PricingSection";
 import ProcessorSection from "./sections/ProcessorSection";
 import Quote from "./sections/Quote";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <BatterySection />
       <ColorSection />
       <CameraSection />
+      <PricingSection />
     </div>
   );
 }

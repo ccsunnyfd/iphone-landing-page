@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Model2 } from "@/app/components/Scene2";
+//@ts-ignore
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useLoader } from "@react-three/fiber";
 
@@ -17,24 +18,24 @@ const ColorSection = () => {
   const { materials } = useLoader(GLTFLoader, "/3D-Model/scene.gltf");
 
   useLayoutEffect(() => {
-    const Elem = sectionRef.current;
-    const leftElem = leftRef.current;
-    const rightElem = rightRef.current;
-    const textElem = textRef.current;
+    const Elem = sectionRef.current as HTMLDivElement | null;
+    const leftElem = leftRef.current as HTMLDivElement | null;
+    const rightElem = rightRef.current as HTMLDivElement | null;
+    const textElem = textRef.current as HTMLDivElement | null;
 
-    const updateColor = (color, text, rgbColor) => {
+    const updateColor = (color: string, text: string, rgbColor: string) => {
       materials.Body.color.set(color);
-      textElem.innerText = text;
-      textElem.style.color = color;
-      leftElem.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
-      rightElem.style.backgroundColor = `rgba(${rgbColor}, 0.4)`;
+      textElem!.innerText = text;
+      textElem!.style.color = color;
+      leftElem!.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
+      rightElem!.style.backgroundColor = `rgba(${rgbColor}, 0.4)`;
     };
 
     gsap.to(Elem, {
       scrollTrigger: {
         trigger: Elem,
         start: "top top",
-        end: `+=${Elem.offsetWidth + 1000}`,
+        end: `+=${Elem!.offsetWidth + 1000}`,
         scrub: true,
         pin: true,
         pinSpacing: true,
@@ -46,7 +47,7 @@ const ColorSection = () => {
         scrollTrigger: {
           trigger: Elem,
           start: "top top",
-          end: `+=${Elem.offsetWidth + 1000}`,
+          end: `+=${Elem!.offsetWidth + 1000}`,
           scrub: true,
         },
       })

@@ -33,7 +33,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/sections/ColorSection.jsx"
   ],
   "exclude": [
     "node_modules"
