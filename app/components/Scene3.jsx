@@ -7,20 +7,19 @@ Source: https://sketchfab.com/3d-models/apple-iphone-13-pro-max-4328dea00e47497d
 Title: Apple iPhone 13 Pro Max
 */
 
-import { useLayoutEffect } from "react";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader } from "@react-three/fiber";
+import { useLayoutEffect, useContext } from "react";
 import { useThree } from "@react-three/fiber";
+import { ModelContext } from "@/app/context/ModelContext";
 
 export function Model3(props) {
-  const { nodes, materials } = useLoader(GLTFLoader, "/3D-Model/scene.gltf");
+  const { currentColor, nodes, materials } = useContext(ModelContext);
 
   const camera = useThree((state) => state.camera);
 
   useLayoutEffect(() => {
     camera.position.set(-0.1, 0.4, 5);
-    materials.Body.color.set("#9BB5CE");
-  }, [camera.position, materials.Body.color]);
+    materials.Body.color.set(currentColor.color);
+  }, [camera.position, currentColor.color, materials]);
 
   return (
     <group {...props} dispose={null}>

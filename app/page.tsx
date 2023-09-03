@@ -8,20 +8,23 @@ import PhoneModel from "./sections/PhoneModel";
 import PricingSection from "./sections/PricingSection";
 import ProcessorSection from "./sections/ProcessorSection";
 import Quote from "./sections/Quote";
+import { ModelProvider } from "@/app/context/ModelContext";
 
 export default function Home() {
   return (
     <div>
       <Quote />
-      <PhoneModel />
       <HeroSection />
       <DesignSection />
       <DisplaySection />
       <ProcessorSection />
       <BatterySection />
-      <ColorSection />
-      <CameraSection />
-      <PricingSection />
+      <ModelProvider>
+        <PhoneModel />
+        <ColorSection />
+        <CameraSection />
+        <PricingSection />
+      </ModelProvider>
     </div>
   );
 }

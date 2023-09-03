@@ -1,13 +1,18 @@
 "use client";
 
-import { Suspense, useLayoutEffect, useRef } from "react";
+import {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import gsap from "gsap";
 import { Environment } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Model2 } from "@/app/components/Scene2";
-//@ts-ignore
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader } from "@react-three/fiber";
+import { ModelContext } from "../context/ModelContext";
 
 const ColorSection = () => {
   const sectionRef = useRef(null);
@@ -15,22 +20,26 @@ const ColorSection = () => {
   const rightRef = useRef(null);
   const textRef = useRef(null);
 
-  const { materials } = useLoader(GLTFLoader, "/3D-Model/scene.gltf");
+  const { currentColor, changeColorFunc } = useContext(ModelContext);
+
+  const leftElem = leftRef.current as HTMLDivElement | null;
+  const rightElem = rightRef.current as HTMLDivElement | null;
+  const textElem = textRef.current as HTMLDivElement | null;
+
+  const updateColor = useCallback(() => {
+    if (!leftElem || !rightElem || !textElem) {
+      return;
+    }
+    textElem!.innerText = currentColor.text;
+    textElem!.style.color = currentColor.color;
+    leftElem!.style.backgroundColor = `rgba(${currentColor.rgbColor}, 0.8)`;
+    rightElem!.style.backgroundColor = `rgba(${currentColor.rgbColor}, 0.4)`;
+  }, [currentColor, leftElem, rightElem, textElem]);
+
+  useEffect(updateColor, [updateColor]);
 
   useLayoutEffect(() => {
     const Elem = sectionRef.current as HTMLDivElement | null;
-    const leftElem = leftRef.current as HTMLDivElement | null;
-    const rightElem = rightRef.current as HTMLDivElement | null;
-    const textElem = textRef.current as HTMLDivElement | null;
-
-    const updateColor = (color: string, text: string, rgbColor: string) => {
-      materials.Body.color.set(color);
-      textElem!.innerText = text;
-      textElem!.style.color = color;
-      leftElem!.style.backgroundColor = `rgba(${rgbColor}, 0.8)`;
-      rightElem!.style.backgroundColor = `rgba(${rgbColor}, 0.4)`;
-    };
-
     gsap.to(Elem, {
       scrollTrigger: {
         trigger: Elem,
@@ -52,46 +61,48 @@ const ColorSection = () => {
         },
       })
       .to(Elem, {
-        onStart: updateColor,
-        onStartParams: ["#9BB5CE", "Sierra Blue", "155, 181,206"],
-        onReverseComplete: updateColor,
-        onReverseCompleteParams: ["#9BB5CE", "Sierra Blue", "155, 181,206"],
+        onStart: changeColorFunc,
+        // onStartParams: ["#9BB5CE", "Sierra Blue", "155, 181,206"],
+        onStartParams: ["SierraBlue"],
+        onReverseComplete: changeColorFunc,
+        onReverseCompleteParams: ["SierraBlue"],
       })
       .to(Elem, {
-        onStart: updateColor,
-        onStartParams: ["#F9E5C9", "Gold", "249, 229,201"],
-        onReverseComplete: updateColor,
-        onReverseCompleteParams: ["#F9E5C9", "Gold", "249, 229,201"],
+        onStart: changeColorFunc,
+        // onStartParams: ["#F9E5C9", "Gold", "249, 229,201"],
+        onStartParams: ["Gold"],
+        onReverseComplete: changeColorFunc,
+        onReverseCompleteParams: ["Gold"],
       })
       .to(Elem, {
-        onStart: updateColor,
-        onStartParams: ["#505F4E", "Alpine Green", "80, 95, 78"],
-        onReverseComplete: updateColor,
-        onReverseCompleteParams: ["#505F4E", "Alpine Green", "80, 95, 78"],
+        onStart: changeColorFunc,
+        onStartParams: ["AlpineGreen"],
+        onReverseComplete: changeColorFunc,
+        onReverseCompleteParams: ["AlpineGreen"],
       })
       .to(Elem, {
-        onStart: updateColor,
-        onStartParams: ["#574f6f", "Deep Purple", "87, 79, 111"],
-        onReverseComplete: updateColor,
-        onReverseCompleteParams: ["#574f6f", "Deep Purple", "87, 79, 111"],
+        onStart: changeColorFunc,
+        onStartParams: ["DeepPurple"],
+        onReverseComplete: changeColorFunc,
+        onReverseCompleteParams: ["DeepPurple"],
       })
       .to(Elem, {
-        onStart: updateColor,
-        onStartParams: ["#A50011", "Red", "165, 0, 17"],
-        onReverseComplete: updateColor,
-        onReverseCompleteParams: ["#A50011", "Red", "165, 0, 17"],
+        onStart: changeColorFunc,
+        onStartParams: ["Red"],
+        onReverseComplete: changeColorFunc,
+        onReverseCompleteParams: ["Red"],
       })
       .to(Elem, {
-        onStart: updateColor,
-        onStartParams: ["#215E7C", "Blue", "33, 94, 124"],
-        onReverseComplete: updateColor,
-        onReverseCompleteParams: ["#215E7C", "Blue", "33, 94, 124"],
+        onStart: changeColorFunc,
+        onStartParams: ["Blue"],
+        onReverseComplete: changeColorFunc,
+        onReverseCompleteParams: ["Blue"],
       });
 
     return () => {
       if (t2) t2.kill();
     };
-  }, []);
+  }, [changeColorFunc]);
 
   return (
     <div

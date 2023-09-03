@@ -6,22 +6,20 @@ License: CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 Source: https://sketchfab.com/3d-models/apple-iphone-13-pro-max-4328dea00e47497dbeac73c556121bc9
 Title: Apple iPhone 13 Pro Max
 */
-
-import { useLayoutEffect } from "react";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { useLoader } from "@react-three/fiber";
-import gsap from "gsap";
+import { useLayoutEffect, useContext } from "react";
 import { useThree } from "@react-three/fiber";
+import { ModelContext } from "@/app/context/ModelContext";
+import gsap from "gsap";
 
 export function Model(props) {
-  const { nodes, materials } = useLoader(GLTFLoader, "/3D-Model/scene.gltf");
+  const { currentColor, nodes, materials } = useContext(ModelContext);
 
   const camera = useThree((state) => state.camera);
   const scene = useThree((state) => state.scene);
 
   useLayoutEffect(() => {
     camera.position.set(0, 2, 6);
-    materials.Body.color.set("#9BB5CE");
+    materials.Body.color.set(currentColor.color);
 
     const t1 = gsap.timeline({
       scrollTrigger: {
@@ -91,7 +89,7 @@ export function Model(props) {
     return () => {
       if (t1) t1.kill();
     };
-  }, [camera.position, materials.Body.color, scene.rotation]);
+  }, []);
 
   return (
     <group {...props} dispose={null}>
@@ -218,5 +216,3 @@ export function Model(props) {
     </group>
   );
 }
-
-// useGLTF.preload("/3D-Model/scene.gltf");
