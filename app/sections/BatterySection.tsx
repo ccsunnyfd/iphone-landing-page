@@ -17,7 +17,7 @@ const BatterySection = () => {
           trigger: el,
           start: "top center",
           end: "bottom center",
-          scrub: true,
+          scrub: 1,
         },
         opacity: 1,
       });

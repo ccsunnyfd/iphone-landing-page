@@ -2,7 +2,6 @@
 
 import {
   Suspense,
-  useCallback,
   useContext,
   useEffect,
   useLayoutEffect,
@@ -22,30 +21,25 @@ const ColorSection = () => {
 
   const { currentColor, changeColorFunc } = useContext(ModelContext);
 
-  const leftElem = leftRef.current as HTMLDivElement | null;
-  const rightElem = rightRef.current as HTMLDivElement | null;
-  const textElem = textRef.current as HTMLDivElement | null;
-
-  const updateColor = useCallback(() => {
-    if (!leftElem || !rightElem || !textElem) {
-      return;
-    }
+  useEffect(() => {
+    const leftElem = leftRef.current as HTMLDivElement | null;
+    const rightElem = rightRef.current as HTMLDivElement | null;
+    const textElem = textRef.current as HTMLDivElement | null;
     textElem!.innerText = currentColor.text;
     textElem!.style.color = currentColor.color;
     leftElem!.style.backgroundColor = `rgba(${currentColor.rgbColor}, 0.8)`;
     rightElem!.style.backgroundColor = `rgba(${currentColor.rgbColor}, 0.4)`;
-  }, [currentColor, leftElem, rightElem, textElem]);
-
-  useEffect(updateColor, [updateColor]);
+  }, [currentColor]);
 
   useLayoutEffect(() => {
     const Elem = sectionRef.current as HTMLDivElement | null;
+
     gsap.to(Elem, {
       scrollTrigger: {
         trigger: Elem,
         start: "top top",
         end: `+=${Elem!.offsetWidth + 1000}`,
-        scrub: true,
+        scrub: 1,
         pin: true,
         pinSpacing: true,
       },
@@ -57,19 +51,17 @@ const ColorSection = () => {
           trigger: Elem,
           start: "top top",
           end: `+=${Elem!.offsetWidth + 1000}`,
-          scrub: true,
+          scrub: 1,
         },
       })
       .to(Elem, {
         onStart: changeColorFunc,
-        // onStartParams: ["#9BB5CE", "Sierra Blue", "155, 181,206"],
         onStartParams: ["SierraBlue"],
         onReverseComplete: changeColorFunc,
         onReverseCompleteParams: ["SierraBlue"],
       })
       .to(Elem, {
         onStart: changeColorFunc,
-        // onStartParams: ["#F9E5C9", "Gold", "249, 229,201"],
         onStartParams: ["Gold"],
         onReverseComplete: changeColorFunc,
         onReverseCompleteParams: ["Gold"],
@@ -102,7 +94,7 @@ const ColorSection = () => {
     return () => {
       if (t2) t2.kill();
     };
-  }, [changeColorFunc]);
+  }, []);
 
   return (
     <div
